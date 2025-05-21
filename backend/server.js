@@ -1,14 +1,14 @@
 import express from  "express"
 import "dotenv/config"
 import cors from "cors"
-import { connectToDatabase } from "./config/db.config.js"
+import { connectDB } from "./config/db.config.js"
 import URLcheck from "./routers/url.check.js"
 
  const app = express()
 const PORT = process.env.PORT  || 8000
 
  // database connection  
- connectToDatabase()
+ connectDB()
 
  //Middlewares
  app.use(cors())
