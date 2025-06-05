@@ -1,7 +1,8 @@
 import axios from 'axios'
+import {toast} from "react-toastify"
 
 const API_BASE_URL = import.meta.env.VITE_BASE_API_URL
-const Accesbility_Checker_Url = '/api/v1/check'
+const Accesbility_Checker_Url = API_BASE_URL+'/api/v1/check'
 
 
 // API Processor 
@@ -10,6 +11,7 @@ export const apiProcessor = async ({
     method,
     payload
 }) => {
+    // eslint-disable-next-line no-useless-catch
     try {
        const response = axios({
             url,
@@ -18,11 +20,19 @@ export const apiProcessor = async ({
         })
 
         const {data} = await response
-        toast[data.status]
+        toast[data.status](data.message)
+        return data 
     } catch (error) {
-        
+       throw error 
     }
 }
 
 // Send the URL | POST | CHECK
-export const checkURL = 
+export const checkURL = async(payload) =>{
+    const obj = {
+        url: Accesbility_Checker_Url,
+        method: "post",
+        payload, 
+    }
+    return apiProcessor(obj)
+}
